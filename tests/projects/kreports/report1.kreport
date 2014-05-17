@@ -36,7 +36,7 @@ namespace ca {
 		}
 	}
 &lt;/code&gt;&lt;trace&gt;fire&lt;/trace&gt;&lt;/transition&gt;&lt;transition clock="False" id="109" name="write result" priority="" sx="70" sy="35" x="90" y="342"&gt;&lt;guard x="90" y="322" /&gt;&lt;code&gt;	ca::Token&amp;lt;int&amp;gt; *t;
-	for (t = var.results.begin(); t != NULL; t = var.results.next(t)) {
+	for (t = var.results.begin(); t != nullptr; t = var.results.next(t)) {
 		printf("%i\n", t-&amp;gt;value);
 	}
 	ctx.quit();

@@ -5,7 +5,7 @@
 	var.targets.push_back(1);
 </code></transition><transition guard="" id="112" name="" sx="70" sy="35" x="275" y="368" /><transition guard="" id="115" name="" sx="70" sy="35" x="48" y="261"><code>	int i = 0;
 	ca::Token&lt;int &gt; *t;
-	for (t = var.list.begin(); t != NULL; t = var.list.next(t)) {
+	for (t = var.list.begin(); t != nullptr; t = var.list.next(t)) {
 		i += t-&gt;value;
 	}	
 	printf("%i\n", i);
