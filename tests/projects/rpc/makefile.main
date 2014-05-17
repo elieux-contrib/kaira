@@ -1,6 +1,6 @@
 
 main: main.cpp
-	g++ -o main main.cpp -I../../../libs/cailie -L../../../build/libs/caclient -L../../../build/libs/cailie -L. -lrpc -lcaclient -lcailie -lpthread -lrt -g
+	g++ -o main main.cpp -I../../../libs/cailie -I../../../libs/gnulib/lib -L../../../build/libs/caclient -L../../../build/libs/cailie -L../../../libs/gnulib/lib -L. -lrpc -lcaclient -lcailie -lpthread -lgnu -lws2_32 -g
 
 clean:
 	rm -f main main_mpi

@@ -18,6 +18,7 @@ def build(ctx):
     files = source_files + ("process_shmem.cpp",)
     ctx.stlib(source=files,
               target="cailie",
+              includes="..\gnulib\lib",
               cxxflags="-DCA_SHMEM",
               name="cailie")
 
@@ -26,6 +27,7 @@ def build(ctx):
         files = source_files + ("process_mpi.cpp", "mpi_requests.cpp")
         ctx.stlib(source=files,
                   target="cailiempi",
+                  includes="..\gnulib\lib",
                   cxxflags="-DCA_MPI",
                   name="cailiempi",
                   env=env)
