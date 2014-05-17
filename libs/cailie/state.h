@@ -87,15 +87,15 @@ namespace ca {
 						this->process_id = process_id;
 					}
 
-					void send(int target,
+					void send_unicast(int target,
 								   ca::NetBase *net,
 								   int edge_id,
 								   int tokens_count,
 								   const ca::Packer &packer) {
-						send(target, net, edge_id, tokens_count, packer, packer.get_size());
+						send_unicast(target, net, edge_id, tokens_count, packer, packer.get_size());
 					}
 
-					void send(int target,
+					void send_unicast(int target,
 								   ca::NetBase *net,
 								   int edge_id,
 								   int tokens_count,

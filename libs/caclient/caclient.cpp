@@ -41,7 +41,7 @@ void CaClient::setup_host()
 	hostname = buffer;
 }
 
-void CaClient::connect()
+void CaClient::create_connection()
 {
 	struct hostent     *he;
 	struct sockaddr_in  addr;

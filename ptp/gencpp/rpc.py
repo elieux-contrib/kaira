@@ -37,7 +37,7 @@ def write_client(builder, header_filename):
 def write_client_init_function(builder):
     builder.line("void calib_init(int argc, char **argv)")
     builder.block_begin()
-    builder.line("client.connect();")
+    builder.line("client.create_connection();")
 
     for net in builder.project.nets:
         declaration = library.get_library_function_declaration(net)

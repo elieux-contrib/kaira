@@ -23,7 +23,9 @@ class RunProgram:
         else:
             self.parameters = parameters
         self.cwd = cwd
-        self.env = env
+        self.env = dict(os.environ)
+        if env is not None:
+            self.env.update(env)
 
     def result(self, pr, expected_output):
         output,errs = pr.communicate()
@@ -35,12 +37,14 @@ class RunProgram:
         return output
 
     def run(self, expected_output = None):
-        pr = subprocess.Popen([self.filename] + self.parameters, stdout=subprocess.PIPE,
+        command = [ "python", self.filename ] if self.filename.endswith('.py') else [ self.filename ]
+        pr = subprocess.Popen(command + self.parameters, stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, cwd = self.cwd, env = self.env)
         return self.result(pr, expected_output)
 
     def fail(self, expected_stdout=None, expected_stderr=None, prefix=False):
-        pr = subprocess.Popen([self.filename] + self.parameters,
+        command = [ "python", self.filename ] if self.filename.endswith('.py') else [ self.filename ]
+        pr = subprocess.Popen(command + self.parameters,
                               stdout=subprocess.PIPE,
                               stderr=subprocess.PIPE,
                               cwd=self.cwd)
@@ -57,7 +61,7 @@ class RunProgram:
     def check_output(self, expected, output, f=None):
         if f is None:
             f = lambda a, b: a == b
-        if expected is not None and not f(expected, output):
+        if expected is not None and not f(expected.replace("\r\n", "\n"), output.replace("\r\n", "\n")):
             self.error("Excepted >>{0}<<, got >>{1}<<".format(expected, output))
 
     def error(self, text):
@@ -104,7 +108,7 @@ class Project:
             return os.path.join(self.get_directory(), "main")
 
     def clean(self):
-        RunProgram("/bin/sh",
+        RunProgram("sh",
                    [os.path.join(TEST_PROJECTS, "fullclean.sh")],
                    cwd=self.get_directory()).run()
 
@@ -226,7 +230,8 @@ class Project:
         if params is None:
             params = {}
 
-        env = { "CASERVER_PORT" : "14980" }
+        env = dict(os.environ)
+        env["CASERVER_PORT"] = "14980"
         executable = self.get_server_executable()
 
         if self.mpi:
@@ -245,7 +250,7 @@ class Project:
         self.server = subprocess.Popen([real_program] + run_args,
                                        cwd=self.get_server_directory(),
                                        env=env)
-        time.sleep(0.2) # Let's give some time to server to open socket
+        time.sleep(1) # Let's give some time to server to open socket
 
     def stop_server(self):
         self.server.kill()

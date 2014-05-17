@@ -19,6 +19,8 @@
 
 import subprocess
 import re
+import os.path
+import tempfile
 
 
 check_id_counter = 30000
@@ -67,9 +69,10 @@ class Check:
 
 class Tester:
 
-    def __init__(self):
+    def __init__(self, tempdir = None):
         self.compiler = "gcc"
-        self.filename = "/tmp/kaira.cpp"
+        self.dir = tempdir if tempdir is not None else tempfile.mkdtemp()
+        self.filename = os.path.join(self.dir, "kaira.cpp")
         self.args = ()
         self.message_parser = re.compile(
             "(?P<filename>[^:]*):(?P<line>\d+):(?P<message>.*)")
@@ -102,7 +105,7 @@ class Tester:
 
         writer.write_to_file(self.filename)
         p = subprocess.Popen(("g++",) + tuple(self.args) +
-                             ("-O0", "-c", "-o", "/tmp/kaira.o", self.filename),
+                             ("-O0", "-c", "-o", os.path.join(self.dir, "kaira.o"), self.filename),
                              stderr=subprocess.PIPE,
                              stdout=subprocess.PIPE)
         self.stdout, self.stderr = p.communicate()

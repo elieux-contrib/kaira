@@ -23,6 +23,7 @@ import base.utils as utils
 import base.paths as paths
 from base.net import Declarations
 import os.path
+import tempfile
 import build
 from copy import copy
 
@@ -179,13 +180,14 @@ class Checker:
         return builder
 
     def run(self):
+        dir = tempfile.mkdtemp()
         builder = build.Builder(self.project,
-            os.path.join("/tmp", self.project.get_name() + ".h"))
+            os.path.join(dir, self.project.get_name() + ".h"))
 
         build.write_header_file(builder)
         builder.write_to_file()
 
-        tester = base.tester.Tester()
+        tester = base.tester.Tester(dir)
         tester.prepare_writer = self.prepare_writer
         tester.args = [ "-I", os.path.join(paths.KAIRA_ROOT, paths.CAILIE_INCLUDE_DIR),
                         "-I", self.project.root_directory ]

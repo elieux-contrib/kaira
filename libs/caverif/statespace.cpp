@@ -6,6 +6,7 @@
 #include <queue>
 #include <algorithm>
 #include <alloca.h>
+#include <libgen.h>
 
 namespace ca {
 	extern ca::NetDef **defs;

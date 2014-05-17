@@ -20,7 +20,7 @@ namespace caclient {
 		public:
 			CaClient();
 			~CaClient();
-			void connect();
+			void create_connection();
 			void register_function(const std::string &name,
 				const std::string &definition,
 				int *id);
