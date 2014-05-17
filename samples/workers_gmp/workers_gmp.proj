@@ -68,7 +68,7 @@ namespace ca {
 	}
 
 </code><trace>fire</trace></transition><transition clock="False" id="109" label-x="125.0" label-y="354.0" name="write result" priority="" sx="70" sy="35" x="90" y="336"><guard x="90" y="316" /><code>	ca::Token&lt;mpz_class&gt; *t;
-	for (t = var.results.begin(); t != NULL; t = var.results.next(t)) {
+	for (t = var.results.begin(); t != nullptr; t = var.results.next(t)) {
 		printf("%s\n", t-&gt;value.get_str(10).c_str());
 	}
 	ctx.quit();

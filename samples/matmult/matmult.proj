@@ -86,7 +86,7 @@ inline int next2(ca::Context &amp;ctx) {
 	int rs = var.matrix.rows() / n;
 	int cs = var.matrix.cols() / n;	
 	int i = 0;
-	for (ca::Token&lt;Matrix&gt; *t = var.results.begin(); t != NULL; t = var.results.next(t), i++)
+	for (ca::Token&lt;Matrix&gt; *t = var.results.begin(); t != nullptr; t = var.results.next(t), i++)
 	{	
 		int r = (i / n) * rs;
 		int c = (i % n) * cs;

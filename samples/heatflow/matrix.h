@@ -12,8 +12,8 @@ class DoubleMatrix
 		DoubleMatrix() {
 			this->size_x = 0;
 			this->size_y = 0;
-			array1 = NULL;
-			array2 = NULL;
+			array1 = nullptr;
+			array2 = nullptr;
 		}
 
 		DoubleMatrix(int size_x, int size_y)

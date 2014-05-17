@@ -155,7 +155,7 @@ bool is_lb(const State &amp;state) {
 
 	ca::Token&lt;Results&gt; *t;
 	int z = 0;
-	for (t = var.results.begin(); t != NULL; t = var.results.next(t), z++) {
+	for (t = var.results.begin(); t != nullptr; t = var.results.next(t), z++) {
 		for (int s = 0; s &lt; t-&gt;value.matrix.get_size_y(); s++) {
 			int l = (s + t-&gt;value.position) % param::SIZE_Y();
 			memcpy(out.get_write_pointer(0, l),

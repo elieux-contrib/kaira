@@ -34,7 +34,7 @@ struct Job {
 		}
 	}
 </code><trace>fire</trace><verif-occurrence binding="True" process="False" /></transition><transition clock="False" collective="False" id="109" label-x="125" label-y="360" name="write result" priority="" sx="70" sy="35" x="90" y="342"><guard x="90" y="322" /><code>	ca::Token&lt;int&gt; *t;
-	for (t = var.results.begin(); t != NULL; t = var.results.next(t)) {
+	for (t = var.results.begin(); t != nullptr; t = var.results.next(t)) {
 		printf("%i\n", t-&gt;value);
 	}
 	ctx.quit();

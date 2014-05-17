@@ -54,7 +54,7 @@ class MyC {
 	}
 	
 	void unpack(ca::Unpacker &amp;unpacker) {
-		if (data == NULL) {
+		if (data == nullptr) {
 			data = new char[param::SIZE()];		
 		}
 		for (int j = 0; j &lt; param::SIZE(); j++) {

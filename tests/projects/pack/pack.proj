@@ -46,7 +46,7 @@ namespace ca {
 			m.mem = malloc(m.s);
 			memcpy(m.mem, p.unpack_data(m.s), m.s);				
 		} else {
-			m.mem = NULL;
+			m.mem = nullptr;
 		}
 		unpack(p, m.x);
 	}
@@ -69,7 +69,7 @@ namespace ca {
 	n.x = 20005;
 	n.a = "012345678901234567890";
 	n.s = 0;
-	n.mem = NULL;
+	n.mem = nullptr;
 	
 	place.add(m);
 	place.add(n);	
@@ -82,7 +82,7 @@ namespace ca {
 	    n.x == 20005 &amp;&amp;
 	    n.s == 0 &amp;&amp;
 	    n.a == "012345678901234567890" &amp;&amp;
-	    n.mem == NULL ) {
+	    n.mem == nullptr ) {
 		char *v = (char*) m.mem;
 			for (int i = 0; i &lt; 100; i++) {
 				if (v[i] != i) {
