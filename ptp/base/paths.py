@@ -39,3 +39,6 @@ CASIMRUN_INCLUDE_DIR = "libs/casimrun"
 CASIMRUN_LIB_DIR = "build/libs/casimrun"
 
 CAOCTAVE_INCLUDE_DIR = "libs/caoctave"
+
+GNULIB_LIB_DIR = "libs/gnulib/lib"
+GNULIB_INCLUDE_DIR = "libs/gnulib/lib"

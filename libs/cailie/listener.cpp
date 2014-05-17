@@ -1,4 +1,6 @@
 
+#include <config.h>
+
 #include "cailie.h"
 #include "listener.h"
 
@@ -108,10 +110,13 @@ void Listener::main()
 			perror("ERROR");
 			exit(-1);
 		}
+		
+#ifndef _WIN32
 		setlinebuf(stdout);
 		/* Because simulator typically runs with redirected stdout,
 			we need to switch back to more expected behavior as in normal
 			 run of program in console */
+#endif
 
 
 		/* Init barriers */

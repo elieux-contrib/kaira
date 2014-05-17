@@ -7,5 +7,5 @@ def build(ctx):
         return
     ctx.stlib(source=source_files,
               target="caverif",
-              includes="../cailie",
+              includes=["../cailie", "../gnulib/lib"],
               name="caverif")

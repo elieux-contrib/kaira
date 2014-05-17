@@ -7,5 +7,5 @@ def build(ctx):
     ctx.stlib(source=source_files,
               target="caclient",
               name="caclient",
-              includes="../cailie",
+              includes=["../cailie", "../gnulib/lib"],
               use="cailie")

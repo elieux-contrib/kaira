@@ -2,6 +2,8 @@
 #ifndef CAVERIF_STATESPACE_H
 #define CAVERIF_STATESPACE_H
 
+#include <config.h>
+
 #include <stack>
 #include <google/sparse_hash_map>
 #include <mhash.h>

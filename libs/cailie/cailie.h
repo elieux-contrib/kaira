@@ -2,6 +2,8 @@
 #ifndef CAILIE_H
 #define CAILIE_H
 
+#include <config.h>
+
 #ifdef CA_MPI
 #include <mpi.h>
 #endif
