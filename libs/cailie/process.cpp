@@ -28,7 +28,7 @@ bool Process::process_packet(Thread *thread, int from_process, int tag, void *da
 		return false;
 	}
 	Tokens *tokens = (Tokens*) data;
-	if(net == NULL) {
+	if(net == nullptr) {
 		CA_DLOG("Too early message on process=%d", get_process_id());
 		EarlyMessage msg;
 		msg.from_process = from_process;
@@ -42,7 +42,7 @@ bool Process::process_packet(Thread *thread, int from_process, int tag, void *da
 	if (tracelog) {
 		tracelog->event_receive(from_process);
 	}
-	if (n == NULL) {
+	if (n == nullptr) {
 		CA_DLOG("Net not found process=%i thread=%i\n",
 			get_process_id(), thread->get_id());
 		// Net is already stopped therefore we can throw tokens away
@@ -65,7 +65,7 @@ void Process::process_service_message(Thread *thread, ServiceMessage *smsg)
 	switch (smsg->type) {
 		case CA_SM_QUIT:
 			CA_DLOG("SERVICE CA_SM_QUIT on process=%i thread=%i\n", get_process_id(), thread->get_id());
-			if(net == NULL) {
+			if(net == nullptr) {
 				CA_DLOG("Quitting not created net on process=%d\n", get_process_id());
 				net_is_quit = true;
 			}
@@ -150,15 +150,15 @@ Process::Process(
 	this->defs = defs;
 	this->net_is_quit = false;
 	this->quit_flag = false;
-	this->net = NULL;
+	this->net = nullptr;
 
 	if (tracelog_size > 0) {
 		thread->set_tracelog(new RealTimeTraceLog(process_id, 0, tracelog_size));
 	}
 
 	#ifdef CA_SHMEM
-	this->packets = NULL;
-	pthread_mutex_init(&packet_mutex, NULL);
+	this->packets = nullptr;
+	pthread_mutex_init(&packet_mutex, nullptr);
 	#endif
 }
 
@@ -185,10 +185,10 @@ void Process::join() {
 
 void Process::clear()
 {
-	if(net != NULL && !net->get_manual_delete()) {
+	if(net != nullptr && !net->get_manual_delete()) {
 		delete net;
 	}
-	net = NULL;
+	net = nullptr;
 }
 
 // NOTE: Relic of old thread system

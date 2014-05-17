@@ -26,7 +26,7 @@ bool ca::Parameter::check_mode_before_run()
 
 bool ca::ParameterInt::parse_value(const std::string &str)
 {
-	char *err = NULL;
+	char *err = nullptr;
 	value = strtol(str.c_str(), &err, 10);
 	if (*err != '\0') {
 		fprintf(stderr, "Invalid parameter value\n");
@@ -38,7 +38,7 @@ bool ca::ParameterInt::parse_value(const std::string &str)
 
 bool ca::ParameterDouble::parse_value(const std::string &str)
 {
-	char *err = NULL;
+	char *err = nullptr;
 	value = strtod(str.c_str(), &err);
 	if (*err != '\0') {
 		fprintf(stderr, "Invalid parameter value\n");

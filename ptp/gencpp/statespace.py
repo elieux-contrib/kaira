@@ -178,7 +178,7 @@ def write_dependent(builder):
     builder.line("return false;")
     builder.block_end()
     builder.line("cass::VerifThread thread(a1.process);")
-    builder.line("ca::Context ctx(&thread, NULL);");
+    builder.line("ca::Context ctx(&thread, nullptr);");
 
     builder.if_begin("a1.type == cass::ActionFire && a2.type == cass::ActionFire")
 
@@ -360,7 +360,7 @@ def write_compute_successors(builder):
     builder.block_begin()
     builder.line("cass::Action action;")
     builder.line("cass::VerifThread thread(a.process);")
-    builder.line("ca::Context ctx(&thread, NULL);");
+    builder.line("ca::Context ctx(&thread, nullptr);");
 
     builder.switch_begin("a.type")
     builder.line("case cass::ActionFire:")

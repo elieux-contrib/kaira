@@ -47,7 +47,7 @@ def write_oct_file(builder):
     builder.emptyline()
     builder.line("DEFUN_DLD({0}_init, args, , \"Library init\")", builder.project.get_name())
     builder.block_begin()
-    builder.line("calib_init(0, NULL);")
+    builder.line("calib_init(0, nullptr);")
     builder.line("return octave_value(\"Library '{0}' is ready\");", builder.project.get_name())
     builder.block_end()
 

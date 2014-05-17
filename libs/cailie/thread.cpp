@@ -8,9 +8,9 @@
 
 using namespace ca;
 
-Thread::Thread(Process *process) : process(process), messages(NULL)
+Thread::Thread(Process *process) : process(process), messages(nullptr)
 {
-	pthread_mutex_init(&messages_mutex, NULL);
+	pthread_mutex_init(&messages_mutex, nullptr);
 }
 
 Thread::~Thread()
@@ -44,9 +44,9 @@ bool Thread::process_thread_messages()
 		ThreadMessage *m;
 		pthread_mutex_lock(&messages_mutex);
 		m = messages;
-		messages = NULL;
+		messages = nullptr;
 		pthread_mutex_unlock(&messages_mutex);
-		if (m != NULL) {
+		if (m != nullptr) {
 			process_message(m);
 		}
 		return true;
@@ -73,12 +73,12 @@ static void * thread_run(void *data)
 {
 	Thread *thread = (Thread*) data;
 	thread->run_scheduler();
-	return NULL;
+	return nullptr;
 }
 
 void Thread::join()
 {
-	pthread_join(thread, NULL);
+	pthread_join(thread, nullptr);
 	#ifdef CA_MPI
 	get_requests()->check();
 	#endif
@@ -87,7 +87,7 @@ void Thread::join()
 void Thread::start()
 {
        CA_DLOG("Starting thread process=%i\n", get_process_id());
-       pthread_create(&thread, NULL, thread_run, this);
+       pthread_create(&thread, nullptr, thread_run, this);
 }
 
 void Thread::quit_all()
@@ -105,12 +105,12 @@ void Thread::run_scheduler()
 	while(!process->quit_flag) {
 		process_messages();
 		Net *n = process->get_net();
-		if (n == NULL) {
+		if (n == nullptr) {
 			continue;
 		}
 
 		Transition *tr = n->pick_active_transition();
-		if (tr == NULL) {
+		if (tr == nullptr) {
 			if (!in_idle && tracelog) {
 				tracelog->event_idle();
 			}
@@ -133,11 +133,11 @@ void Thread::run_one_step()
 {
 	process_messages();
 	Net *net = process->get_net();
-	if (net == NULL) {
+	if (net == nullptr) {
 		return;
 	}
 	Transition *tr = net->pick_active_transition();
-	if (tr == NULL) {
+	if (tr == nullptr) {
 		return;
 	}
 	tr->set_active(false);

@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "nullptr.h"
+
 namespace ca {
 
 enum ParameterMode {

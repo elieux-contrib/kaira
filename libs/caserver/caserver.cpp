@@ -30,7 +30,7 @@ CaServer::~CaServer()
 void CaServer::setup_port()
 {
 	char *v = getenv("CASERVER_PORT");
-	if (v == NULL) {
+	if (v == nullptr) {
 		fprintf(stderr, "Environment variable CASERVER_PORT is not set\n");
 		exit(-1);
 	}

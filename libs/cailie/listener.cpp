@@ -72,12 +72,12 @@ void * listener_thread(void *data)
 {
 	Listener *listener = (Listener*) data;
 	listener->main();
-	return NULL;
+	return nullptr;
 }
 
 void Listener::start()
 {
-	pthread_create(&thread, NULL, listener_thread, this);
+	pthread_create(&thread, nullptr, listener_thread, this);
 }
 
 void Listener::wait_for_connection()
@@ -85,7 +85,7 @@ void Listener::wait_for_connection()
 	fd_set s;
 	FD_ZERO(&s);
 	FD_SET(listen_socket,&s);
-	int r = select(listen_socket + 1, &s, NULL, NULL, NULL);
+	int r = select(listen_socket + 1, &s, nullptr, nullptr, nullptr);
 	if (r < 0) {
 		perror("Listener::wait_for_connection");
 		exit(-1);
@@ -95,7 +95,7 @@ void Listener::wait_for_connection()
 void Listener::main()
 {
 	for(;;) {
-		int client = accept(listen_socket, NULL, NULL);
+		int client = accept(listen_socket, nullptr, nullptr);
 
 		if (client < 0) {
 			perror("accept");
@@ -103,7 +103,7 @@ void Listener::main()
 
 		FILE *comm_in = fdopen(client, "r");
 		FILE *comm_out = fdopen(client, "w");
-		if (comm_in == NULL || comm_out == NULL) {
+		if (comm_in == nullptr || comm_out == nullptr) {
 			perror("ERROR");
 			exit(-1);
 		}
@@ -117,8 +117,8 @@ void Listener::main()
 		pthread_barrier_t barrier1;
 		pthread_barrier_t barrier2;
 
-		pthread_barrier_init(&barrier1, NULL, process_count + 1);
-		pthread_barrier_init(&barrier2, NULL, process_count + 1);
+		pthread_barrier_init(&barrier1, nullptr, process_count + 1);
+		pthread_barrier_init(&barrier2, nullptr, process_count + 1);
 
 		for (int t = 0; t < process_count; t++) {
 			processes[t]->send_barriers(&barrier1, &barrier2);
@@ -126,7 +126,7 @@ void Listener::main()
 
 		if (start_barrier) {
 			pthread_barrier_wait(start_barrier);
-			start_barrier = NULL;
+			start_barrier = nullptr;
 		}
 
 		/* Wait for all process */
@@ -166,7 +166,7 @@ void Listener::process_commands(FILE *comm_in, FILE *comm_out)
 	for(;;) {
 		fflush(comm_out);
 		char *s = fgets(line, LINE_LENGTH_LIMIT, comm_in);
-		if (s == NULL) {
+		if (s == nullptr) {
 			return;
 		}
 
@@ -206,7 +206,7 @@ void Listener::process_commands(FILE *comm_in, FILE *comm_out)
 				continue;
 			}
 			TransitionDef *transition_def = state->get_net_def()->get_transition_def(transition_id);
-			if (transition_def == NULL) {
+			if (transition_def == nullptr) {
 				fprintf(comm_out, "Invalid transition\n");
 				continue;
 			}

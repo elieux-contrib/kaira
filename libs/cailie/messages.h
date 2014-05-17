@@ -5,6 +5,8 @@
 #include <pthread.h>
 #include <string>
 
+#include "nullptr.h"
+
 namespace ca {
 
 class Thread;
@@ -12,7 +14,7 @@ class Net;
 
 class ThreadMessage {
 	public:
-		ThreadMessage() : next(NULL) {}
+		ThreadMessage() : next(nullptr) {}
 		virtual ~ThreadMessage() {}
 		ThreadMessage *next;
 		virtual void process(Thread *thread) = 0;

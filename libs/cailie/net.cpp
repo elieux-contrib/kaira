@@ -37,7 +37,7 @@ TransitionDef* NetDef::get_transition_def(int transition_id)
 			return transition_defs[t];
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 NetBase * NetDef::spawn(ThreadBase *thread)
@@ -53,7 +53,7 @@ void NetBase::write_reports(ThreadBase *thread, Output &output)
 Net::Net(NetDef *def, Thread *thread) :
 	def(def),
 	running_transitions(0),
-	data(NULL),
+	data(nullptr),
 	flags(0)
 {
 	transitions = def->make_transitions();
@@ -79,7 +79,7 @@ Transition * Net::pick_active_transition()
 			return &transitions[t];
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 int Net::fire_transition(Thread *thread, int transition_id)

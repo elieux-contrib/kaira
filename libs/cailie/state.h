@@ -23,31 +23,31 @@ namespace ca {
 
 		Activation(const Activation &a) {
 			transition_def = a.transition_def;
-			if (a.binding != NULL) {
+			if (a.binding != nullptr) {
 				binding = a.binding->copy();
 			} else {
-				binding = NULL;
+				binding = nullptr;
 			}
 		}
 
 		Activation& operator=(const Activation &a) {
 			if (this != &a) {
-				if (binding != NULL) {
+				if (binding != nullptr) {
 					delete binding;
 				}
 
 				transition_def = a.transition_def;
-				if (a.binding != NULL) {
+				if (a.binding != nullptr) {
 					binding = a.binding->copy();
 				} else {
-					binding = NULL;
+					binding = nullptr;
 				}
 			}
 			return *this;
 		}
 
 		virtual ~Activation() {
-			if (binding != NULL) {
+			if (binding != nullptr) {
 				delete binding;
 			}
 		}
@@ -143,11 +143,11 @@ namespace ca {
 					}
 
 					int collective_bindings(TransitionDef *transition_def, std::vector<Binding*> &bindings) {
-						bindings.resize(ca::process_count, NULL);
+						bindings.resize(ca::process_count, nullptr);
 						int count = 0;
 						for (size_t i = 0; i < process_count; i++) {
 							ActivationT *a = state->activations[i];
-							if (a == NULL) {
+							if (a == nullptr) {
 								continue;
 							}
 							TransitionDef *td = a->transition_def;
@@ -174,7 +174,7 @@ namespace ca {
 			typedef std::vector<ActivationT*> Activations;
 
 			StateBase() :
-				nets(process_count), net_def(NULL), activations(process_count, NULL), quit(false)
+				nets(process_count), net_def(nullptr), activations(process_count, nullptr), quit(false)
 			{
 				packets = new std::deque<PacketT>[ca::process_count * ca::process_count];
 			}
@@ -191,7 +191,7 @@ namespace ca {
 			}
 
 			StateBase(NetDef *net_def, const std::vector<NetT*> &nets)
-				: nets(nets), net_def(net_def), activations(process_count, NULL), quit(false)
+				: nets(nets), net_def(net_def), activations(process_count, nullptr), quit(false)
 			{
 				packets = new std::deque<PacketT>[process_count * process_count];
 			}
@@ -199,7 +199,7 @@ namespace ca {
 			StateBase(const StateBase<NetT, ActivationT, PacketT> &state)
 				: nets(process_count),
 				  net_def(state.net_def),
-				  activations(process_count, NULL),
+				  activations(process_count, nullptr),
 				  quit(state.quit)
 			{
 				for (int i = 0; i < ca::process_count; i++) {
@@ -207,7 +207,7 @@ namespace ca {
 				}
 
 				for (int i = 0; i < process_count; i++) {
-					if (state.activations[i] != NULL) {
+					if (state.activations[i] != nullptr) {
 						activations[i] = new ActivationT(*state.activations[i]);
 					}
 				}
@@ -235,7 +235,7 @@ namespace ca {
 				}
 
 				for (int i = 0; i < process_count; i++) {
-					if (activations[i] != NULL) {
+					if (activations[i] != nullptr) {
 						delete activations[i];
 					}
 				}
@@ -283,7 +283,7 @@ namespace ca {
 				}
 
 				for (size_t i = 0; i < process_count; i++) {
-					if (activations[i] == NULL) {
+					if (activations[i] == nullptr) {
 						continue;
 					}
 					output.child("activation");
@@ -322,7 +322,7 @@ namespace ca {
 				}
 				StateThread thread(this, process_id);
 				Binding *binding = transition_def->fire_phase1(&thread, nets[process_id]);
-				if (binding == NULL) {
+				if (binding == nullptr) {
 					return false;
 				}
 
@@ -338,7 +338,7 @@ namespace ca {
 				} else {
 					if (fire_transition_phase1(process_id, transition_def)) {
 						for (int i = process_count - 1; i >= 0; i--) {
-							if (activations[i] == NULL) {
+							if (activations[i] == nullptr) {
 								continue;
 							}
 							ActivationT *a = activations[i];
@@ -374,19 +374,19 @@ namespace ca {
 				ActivationT *a = activations[process_id];
 				StateThread thread(this, process_id);
 				a->transition_def->fire_phase2(&thread, nets[process_id], a->binding);
-				a->binding = NULL;
+				a->binding = nullptr;
 				delete activations[process_id];
-				activations[process_id] = NULL;
+				activations[process_id] = nullptr;
 			}
 
 			bool is_process_busy(int process_id) {
-				return (activations[process_id] != NULL);
+				return (activations[process_id] != nullptr);
 			}
 
 			size_t get_activate_process_count() {
 				size_t size = 0;
 				for (int i = 0; i < process_count; i++) {
-					if (activations[i] != NULL) {
+					if (activations[i] != nullptr) {
 						size++;
 					}
 				}
@@ -467,7 +467,7 @@ namespace ca {
 
 		protected:
 			virtual TraceLog* get_tracelog(int process_id) {
-				return NULL;
+				return nullptr;
 			}
 			std::vector<NetT*> nets;
 			NetDef *net_def;

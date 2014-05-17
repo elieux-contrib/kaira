@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <mpi.h>
 
+#include "nullptr.h"
+
 namespace ca {
 
 class RequestData {

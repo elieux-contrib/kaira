@@ -15,24 +15,24 @@
 namespace ca {
 
 int process_count = 1;
-const char *project_description_string = NULL;
+const char *project_description_string = nullptr;
 int listen_port = -1;
 int block_on_start = 0;
 NetDef **defs;
 int defs_count = 0;
-Net *master_net = NULL;
-Listener *listener = NULL;
+Net *master_net = nullptr;
+Listener *listener = nullptr;
 std::vector<Parameter*> parameters;
 
 size_t tracelog_size = 0;
 
 #ifdef CA_SHMEM
-Process **processes = NULL;
+Process **processes = nullptr;
 bool sequential_run = false;
 #endif
 
 #ifdef CA_MPI
-Process *process = NULL;
+Process *process = nullptr;
 #endif
 
 }
@@ -74,12 +74,12 @@ int ca::main()
 
 	#ifdef CA_SHMEM
 
-	if (listener != NULL) {
+	if (listener != nullptr) {
         pthread_barrier_t start_barrier;
 		listener->set_processes(process_count, processes);
 
 		if (block_on_start) {
-			pthread_barrier_init(&start_barrier, NULL, 2);
+			pthread_barrier_init(&start_barrier, nullptr, 2);
 			listener->set_start_barrier(&start_barrier);
 		}
 
@@ -117,9 +117,9 @@ int ca::main()
 		}
 	}
 
-	if (listener != NULL) {
+	if (listener != nullptr) {
 		delete listener;
-		listener = NULL;
+		listener = nullptr;
 	}
 	#endif
 
@@ -160,7 +160,7 @@ static void finalize()
 		}
 		free(defs);
 	}
-	if (listener != NULL) {
+	if (listener != nullptr) {
 		delete listener;
 	}
 }
@@ -177,14 +177,14 @@ void ca::init(int argc,
 	size_t t;
 	int c;
 	struct option longopts[] = {
-		{ "help",	0,	NULL, 'h' },
-		{ NULL,		0,	NULL,  0}
+		{ "help",	0,	nullptr, 'h' },
+		{ nullptr,		0,	nullptr,  0}
 	};
 
 	atexit(finalize);
 	ca::parameters = parameters;
 	std::string all_args = std::string("hp:t:l:s:br:T:S") + extra_args;
-	while ((c = getopt_long (argc, argv, all_args.c_str(), longopts, NULL)) != -1)
+	while ((c = getopt_long (argc, argv, all_args.c_str(), longopts, nullptr)) != -1)
 		switch (c) {
 			case 'h': {
 				size_t max_len = 0;
@@ -267,7 +267,7 @@ void ca::init(int argc,
 
 			case '?':
 			default:
-				if (extra_args_callback != NULL) {
+				if (extra_args_callback != nullptr) {
 					extra_args_callback(c, optarg, extra_args_data);
 				} else {
 					exit(1);

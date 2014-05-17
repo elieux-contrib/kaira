@@ -23,7 +23,7 @@ namespace cass {
 			TokenList() : ca::TokenList<T>() {}
 
 			TokenList(TokenList &place) : ca::TokenList<T>() {
-				if (place.token == NULL) {
+				if (place.token == nullptr) {
 					return;
 				}
 				ca::Token<T> *t = place.token;

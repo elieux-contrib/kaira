@@ -11,8 +11,8 @@ namespace ca {
 template<typename T> class Token {
 
 	public:
-		Token() : prev(NULL), next(NULL) {}
-		Token(const T &value) : value(value), prev(NULL), next(NULL) {}
+		Token() : prev(nullptr), next(nullptr) {}
+		Token(const T &value) : value(value), prev(nullptr), next(nullptr) {}
 
 		void remove() {
 			next->prev = prev;
@@ -28,13 +28,13 @@ template<typename T> class Token {
 template<typename T> class TokenList {
 
 	public:
-		TokenList() : token(NULL), tokens_count(0) {}
+		TokenList() : token(nullptr), tokens_count(0) {}
 		~TokenList() {
 			clear();
 		}
 
 		TokenList(const TokenList<T> &list) {
-			token = NULL;
+			token = nullptr;
 			tokens_count = 0;
 			copy_tokens(list);
 		}
@@ -43,24 +43,24 @@ template<typename T> class TokenList {
 			if (overtake) {
 				this->token = list.token;
 				this->tokens_count = list.tokens_count;
-				list.token = NULL;
+				list.token = nullptr;
 				list.tokens_count = 0;
 			} else {
-				token = NULL;
+				token = nullptr;
 				tokens_count = 0;
 				copy_tokens(list);
 			}
 		}
 
 		void overtake(TokenList<T> &list) {
-			if (list.token == NULL) {
+			if (list.token == nullptr) {
 				return;
 			}
 
-			if (token == NULL) {
+			if (token == nullptr) {
 				this->token = list.token;
 				this->tokens_count = list.tokens_count;
-				list.token = NULL;
+				list.token = nullptr;
 				list.tokens_count = 0;
 				return;
 			}
@@ -77,13 +77,13 @@ template<typename T> class TokenList {
 			tbegin->prev = my_tlast;
 
 			tokens_count += list.tokens_count;
-			list.token = NULL;
+			list.token = nullptr;
 			list.tokens_count = 0;
 		}
 
 		void copy_tokens(const TokenList<T> &list) {
 			Token<T> *t;
-			for (t = list.begin(); t != NULL; t = list.next(t)) {
+			for (t = list.begin(); t != nullptr; t = list.next(t)) {
 				add(t->value);
 			}
 		}
@@ -120,7 +120,7 @@ template<typename T> class TokenList {
 			if (t == token) {
 				token = t->next;
 				if (t == token)
-					token = NULL;
+					token = nullptr;
 			}
 			t->remove();
 			tokens_count--;
@@ -136,7 +136,7 @@ template<typename T> class TokenList {
 					Token<T> *next = t->next;
 					delete t;
 					t = next; } while(t != token);
-				token = NULL;
+				token = nullptr;
 				tokens_count = 0;
 			}
 			return v;
@@ -163,7 +163,7 @@ template<typename T> class TokenList {
 					delete t;
 					t = next;
 				} while(t != token);
-				token = NULL;
+				token = nullptr;
 				tokens_count = 0;
 			}
 		}
@@ -205,14 +205,14 @@ template<typename T> class TokenList {
 		}
 
 		bool is_empty() const {
-			return token == NULL;
+			return token == nullptr;
 		}
 
 		Token<T> * next(Token<T> *token) const {
 			if (token != last()) {
 				return token->next;
 			} else {
-				return NULL;
+				return nullptr;
 			}
 		}
 

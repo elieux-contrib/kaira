@@ -139,7 +139,7 @@ void State::hash_activations(MHASH hash_thread)
 	mhash(hash_thread, &size, sizeof(size_t));
 	Activation *a;
 	for (int i = 0; i < ca::process_count; i++) {
-		if (activations[i] == NULL) {
+		if (activations[i] == nullptr) {
 			continue;
 		}
 		a = activations[i];
@@ -192,7 +192,7 @@ void State::pack_activations(ca::Packer &packer)
 	pack(packer, get_activate_process_count());
 	Activation *a;
 	for (int i = 0; i < ca::process_count; i++) {
-		if (activations[i] == NULL) {
+		if (activations[i] == nullptr) {
 			continue;
 		}
 		a = activations[i];
@@ -224,9 +224,9 @@ HashDigest State::compute_hash(hashid hash_id)
 }
 
 Node::Node(HashDigest hash, State *state, Node *prev)
-	: hash(hash), state(state), prev(prev), quit(false), final_marking(NULL), tag(0), data(NULL)
+	: hash(hash), state(state), prev(prev), quit(false), final_marking(nullptr), tag(0), data(nullptr)
 {
-	if (prev != NULL) {
+	if (prev != nullptr) {
 		distance = prev->get_distance() + 1;
 	} else {
 		distance = 0;
@@ -236,11 +236,11 @@ Node::Node(HashDigest hash, State *state, Node *prev)
 Node::~Node()
 {
 	free(hash);
-	if (final_marking != NULL) {
+	if (final_marking != nullptr) {
 		free(final_marking);
 	}
 	for(size_t i = 0; i < nexts.size(); i++) {
-		if (nexts[i].action == ActionFire && nexts[i].data.fire.binding != NULL) {
+		if (nexts[i].action == ActionFire && nexts[i].data.fire.binding != nullptr) {
 			free(nexts[i].data.fire.binding);
 		}
 	}
@@ -248,7 +248,7 @@ Node::~Node()
 
 void Node::set_prev(Node *node)
 {
-	if (prev != NULL && node->get_distance() + 1 < get_distance()) {
+	if (prev != nullptr && node->get_distance() + 1 < get_distance()) {
 		prev = node;
 		distance = node->get_distance() + 1;
 	}
@@ -339,7 +339,7 @@ void Node::generate(Core *core)
 				if (core->generate_binding_in_nni(it->data.fire.transition_def->get_id())) {
 					nninfo.data.fire.binding = core->hash_packer(packer);
 				} else {
-					nninfo.data.fire.binding = NULL;
+					nninfo.data.fire.binding = nullptr;
 				}
 				nexts.push_back(nninfo);
 				packer.free();
@@ -364,8 +364,8 @@ void Node::generate(Core *core)
 
 Core::Core(VerifConfiguration &verif_configuration) :
 	nodes(10000, HashDigestHash(MHASH_MD5), HashDigestEq(MHASH_MD5)),
-	initial_node(NULL),
-	net_def(NULL),
+	initial_node(nullptr),
+	net_def(nullptr),
 	verif_configuration(verif_configuration)
 {
 	if (cfg_analyse_transition_occurence) {
@@ -389,7 +389,7 @@ void Core::generate()
 
 	net_def = ca::defs[0]; // Take first definition
 	State *initial_state = new State(net_def);
-	initial_node = add_state(initial_state, NULL);
+	initial_node = add_state(initial_state, nullptr);
 	int count = 0;
 	do {
 		count++;
@@ -769,7 +769,7 @@ void Core::write_control_sequence(std::vector<Node*> &nodes, ca::Output &report)
 	node = nodes[0];
 	do {
 		path.push_back(node);
-	} while ((node = node->get_prev()) != NULL);
+	} while ((node = node->get_prev()) != nullptr);
 
 	std::stringstream s;
 	Node *prev = path[path.size() - 1];
@@ -810,7 +810,7 @@ void Core::write_suffix(const std::string &name, std::vector<Node*> &nodes, ca::
 void Core::run_analysis_final_nodes(ca::Output &report)
 {
 	size_t deadlocks = 0;
-	Node* deadlock_node = NULL;
+	Node* deadlock_node = nullptr;
 	NodeMap final_markings(100, HashDigestHash(MHASH_MD5), HashDigestEq(MHASH_MD5));
 
 	NodeMap::const_iterator it;
@@ -831,7 +831,7 @@ void Core::run_analysis_final_nodes(ca::Output &report)
 			if (cfg_analyse_deadlock) {
 				if (!node->get_quit_flag()) {
 					deadlocks++;
-					if (deadlock_node == NULL ||
+					if (deadlock_node == nullptr ||
 						deadlock_node->get_distance() > node->get_distance()) {
 						deadlock_node = node;
 					}
@@ -918,7 +918,7 @@ void Core::run_analysis_transition_occurrence(ca::Output &report)
 	ParikhVector *current, *next;
 	std::queue<Node*> node_queue;
 	std::vector<Node*> error_node2;
-	Node *error_node = NULL;
+	Node *error_node = nullptr;
 	Node *node;
 
 	current = new ParikhVector(arcCmp);
@@ -926,7 +926,7 @@ void Core::run_analysis_transition_occurrence(ca::Output &report)
 	initial_node->set_data(current);
 	node_queue.push(initial_node);
 
-	while (!node_queue.empty() && error_node == NULL) {
+	while (!node_queue.empty() && error_node == nullptr) {
 		node = node_queue.front();
 		node_queue.pop();
 		current = (ParikhVector*)(node->get_data());
@@ -947,7 +947,7 @@ void Core::run_analysis_transition_occurrence(ca::Output &report)
 
 			Node *n = nexts_nodes[i].node;
 			ParikhVector *v = (ParikhVector*) n->get_data();
-			if (v != NULL) {
+			if (v != nullptr) {
 				ParikhVector::const_iterator it;
 				if (*v != *next) {
 					error_node = n;
@@ -965,15 +965,15 @@ void Core::run_analysis_transition_occurrence(ca::Output &report)
 	}
 
 	NodeMap::const_iterator it;
-	current = NULL;
-	Node *current_node = NULL;
+	current = nullptr;
+	Node *current_node = nullptr;
 	for (it = nodes.begin(); it != nodes.end(); it++)
 	{
 		Node *node = it->second;
 		ParikhVector *v = (ParikhVector*) node->get_data();
-		if (v != NULL) {
-			if (node->get_quit_flag() && error_node == NULL) {
-				if (current == NULL) {
+		if (v != nullptr) {
+			if (node->get_quit_flag() && error_node == nullptr) {
+				if (current == nullptr) {
 					current_node = node;
 					current = v;
 					continue;
@@ -984,7 +984,7 @@ void Core::run_analysis_transition_occurrence(ca::Output &report)
 				}
 			}
 			delete v;
-			node->set_data(NULL);
+			node->set_data(nullptr);
 		}
 	}
 
@@ -1079,7 +1079,7 @@ Node * Core::add_state(State *state, Node *prev)
 	HashDigest hash = state->compute_hash(MHASH_MD5);
 
 	Node *node = get_node(hash);
-	if (node == NULL) {
+	if (node == nullptr) {
 		node = new Node(hash, state, prev);
 		node->set_quit_flag(state->get_quit_flag());
 		nodes[hash] = node;
@@ -1126,7 +1126,7 @@ Node * Core::get_node(HashDigest digest) const
 {
 	NodeMap::const_iterator it = nodes.find(digest);
 	if (it == nodes.end())
-		return NULL;
+		return nullptr;
 	else
 		return it->second;
 }

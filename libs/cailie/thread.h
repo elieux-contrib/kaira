@@ -11,7 +11,7 @@ namespace ca {
 
 class ThreadBase {
 	public:
-		ThreadBase(TraceLog *tracelog = NULL)
+		ThreadBase(TraceLog *tracelog = nullptr)
 			: tracelog(tracelog) {}
 
 		virtual ~ThreadBase() {}

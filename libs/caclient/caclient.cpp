@@ -27,7 +27,7 @@ CaClient::~CaClient()
 void CaClient::setup_host()
 {
 	char *v = getenv("CACLIENT_HOST");
-	if (v == NULL) {
+	if (v == nullptr) {
 		fprintf(stderr, "Environment variable CACLIENT_HOST is not set\n");
 		exit(-1);
 	}
@@ -47,7 +47,7 @@ void CaClient::connect()
 	struct sockaddr_in  addr;
 
 	he = gethostbyname(hostname.c_str());
-	if (he == NULL) {
+	if (he == nullptr) {
 		perror("gethostbyname");
 		exit(1);
 	}

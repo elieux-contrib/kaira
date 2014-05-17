@@ -15,7 +15,7 @@ void Process::broadcast_packet(int tag, void *data, size_t size, int exclude)
 		if (t == exclude)
 			continue;
 		MPI_Request *request = thread->get_requests()->new_request(d);
-		d = NULL;
+		d = nullptr;
 		MPI_Isend(data, size, MPI_BYTE, t, tag, MPI_COMM_WORLD, request);
 	}
 }
@@ -46,7 +46,7 @@ void Process::send_multicast(
 		CA_DLOG("SEND index=%i target=%i process=%i\n", place_index, target, get_process_id());
 
 		MPI_Request *request = thread->get_requests()->new_request(d);
-		d = NULL;
+		d = nullptr;
 		MPI_Isend(buffer, size, MPI_BYTE, target, CA_TAG_TOKENS, MPI_COMM_WORLD, request);
 	}
 }
@@ -103,7 +103,7 @@ void ca::Process::collective_scatter_root(int transition_id, const void *data, s
 }
 
 void ca::Process::collective_scatter_nonroot(int transition_id, int root, void *out, size_t size) {
-	MPI_Scatter(NULL, size, MPI_BYTE, out, size, MPI_BYTE, root, MPI_COMM_WORLD);
+	MPI_Scatter(nullptr, size, MPI_BYTE, out, size, MPI_BYTE, root, MPI_COMM_WORLD);
 }
 
 void ca::Process::collective_scatterv_root(int transition_id, const void *data, int *sizes, int *displs) {
@@ -113,7 +113,7 @@ void ca::Process::collective_scatterv_root(int transition_id, const void *data, 
 }
 
 void ca::Process::collective_scatterv_nonroot(int transition_id, int root, void *out, size_t size) {
-	MPI_Scatterv(NULL, NULL, NULL, MPI_BYTE, out, size, MPI_BYTE, root, MPI_COMM_WORLD);
+	MPI_Scatterv(nullptr, nullptr, nullptr, MPI_BYTE, out, size, MPI_BYTE, root, MPI_COMM_WORLD);
 }
 
 
@@ -126,7 +126,7 @@ void ca::Process::collective_gather_root(int transition_id, const void *data, si
 
 void ca::Process::collective_gather_nonroot(int transition_id, int root, const void *data, size_t size) {
 	// MPI_Gather should take const void * as first argument, but it takes just void * so we have to cast
-	MPI_Gather(const_cast<void*>(data), size, MPI_BYTE, NULL, size, MPI_BYTE, root, MPI_COMM_WORLD);
+	MPI_Gather(const_cast<void*>(data), size, MPI_BYTE, nullptr, size, MPI_BYTE, root, MPI_COMM_WORLD);
 }
 
 void ca::Process::collective_gatherv_root(
@@ -138,7 +138,7 @@ void ca::Process::collective_gatherv_root(
 void ca::Process::collective_gatherv_nonroot(
 		int transition_id, int root, const void *data, int size) {
 	MPI_Gatherv(const_cast<void*>(data), size, MPI_BYTE,
-		NULL, NULL, NULL, MPI_BYTE, root, MPI_COMM_WORLD);
+		nullptr, nullptr, nullptr, MPI_BYTE, root, MPI_COMM_WORLD);
 }
 
 // Bcast ----------------------------------------------------------

@@ -33,9 +33,9 @@ void ca::Process::add_packet(int from_process, int tag, void *data, size_t size)
 	packet->tag = tag;
 	packet->data = data;
 	packet->size = size;
-	packet->next = NULL;
+	packet->next = nullptr;
 	pthread_mutex_lock(&packet_mutex);
-	if (packets == NULL) {
+	if (packets == nullptr) {
 		packets = packet;
 	} else {
 		ShmemPacket *p = packets;
@@ -86,7 +86,7 @@ int ca::Process::process_packets(Thread *thread)
 	if (packets) {
 		pthread_mutex_lock(&packet_mutex);
 		ShmemPacket *p = packets;
-		packets = NULL;
+		packets = nullptr;
 		pthread_mutex_unlock(&packet_mutex);
 
 		/* Now we have to be sure that all thread messages
@@ -111,8 +111,8 @@ int ca::Process::process_packets(Thread *thread)
 void ca::Process::init_collective_operations(int process_count)
 {
 	collective_transition_id = 0;
-	pthread_barrier_init(&collective_barrier1, NULL, process_count);
-	pthread_barrier_init(&collective_barrier2, NULL, process_count);
+	pthread_barrier_init(&collective_barrier1, nullptr, process_count);
+	pthread_barrier_init(&collective_barrier2, nullptr, process_count);
 }
 
 

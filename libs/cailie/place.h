@@ -79,7 +79,7 @@ template <typename T> class PlaceWithSource : public Place<T>
 
 		PlaceWithSource(const PlaceWithSource &place) : Place<T>(place), default_source(place.default_source) {
 			Token<T> *s = this->token_list.begin();
-			for (Token<T> *t = place.token_list.begin(); t != NULL; t = place.token_list.next(t)) {
+			for (Token<T> *t = place.token_list.begin(); t != nullptr; t = place.token_list.next(t)) {
 				this->sources[s] = place.sources.find(t)->second;
 				s = this->token_list.next(s);
 			}
@@ -90,7 +90,7 @@ template <typename T> class PlaceWithSource : public Place<T>
 			this->default_source = place.default_source;
 			this->sources.clear();
 			Token<T> *s = this->token_list.begin();
-			for (Token<T> *t = place.token_list.begin(); t != NULL; t = place.token_list.next(t)) {
+			for (Token<T> *t = place.token_list.begin(); t != nullptr; t = place.token_list.next(t)) {
 				this->sources[s] = place.sources.find(t)->second;
 				s = this->token_list.next(s);
 			}
@@ -106,7 +106,7 @@ template <typename T> class PlaceWithSource : public Place<T>
 		}
 
 		void overtake(TokenList<T> &list, int source) {
-			for (Token<T> *t = list.begin(); t != NULL; t = list.next(t)) {
+			for (Token<T> *t = list.begin(); t != nullptr; t = list.next(t)) {
 				sources[t] = source;
 			}
 			this->token_list.overtake(list);
@@ -176,7 +176,7 @@ template <typename T> class PlaceWithSource : public Place<T>
 		{
 			std::vector<int> result;
 			for (Token<T> *t = this->token_list.begin();
-			     t != NULL;
+			     t != nullptr;
 				 t = this->token_list.next(t)) {
 				result.push_back(sources[t]);
 			}
@@ -188,7 +188,7 @@ template <typename T> class PlaceWithSource : public Place<T>
 			packer << this->token_list;
 			ca::pack(packer, this->token_list);
 			for (Token<T> *t = this->token_list.begin();
-				t != NULL;
+				t != nullptr;
 				t = this->token_list.next(t)) {
 				packer << sources.find(t)->second;
 			}

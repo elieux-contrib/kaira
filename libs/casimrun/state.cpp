@@ -18,7 +18,7 @@ casr::State::State(RunConfiguration &run_configuration, ca::NetDef *net_def)
 		if (ca::tracelog_size > 0) {
 			ti.tracelog = new ControlledTimeTraceLog(p, 0, ca::tracelog_size);
 		} else {
-			ti.tracelog = NULL;
+			ti.tracelog = nullptr;
 		}
 	}
 	spawn(net_def);
@@ -103,7 +103,7 @@ ca::IntTime casr::State::run_process(int process_id) {
 	// Transitions
 	ca::Net *n = nets[process_id];
 	ca::Transition *tr = n->pick_active_transition();
-	if (tr == NULL) {
+	if (tr == nullptr) {
 		if (!ti.idle && tracelog) {
 			tracelog->event_idle();
 		}

@@ -13,6 +13,7 @@
 #include <stdarg.h>
 #include <algorithm>
 
+#include "nullptr.h"
 #include "token.h"
 #include "place.h"
 #include "thread.h"
@@ -75,8 +76,8 @@ void init(
 	std::vector<Parameter*> &parameters,
 	bool tracing,
 	const std::string& extra_args = "",
-	void extra_args_callback(char, char*, void*) = NULL,
-	void *extra_args_data = NULL);
+	void extra_args_callback(char, char*, void*) = nullptr,
+	void *extra_args_data = nullptr);
 
 void setup(int defs_count, NetDef **defs, bool start_process);
 void spawn_net(int def_id);

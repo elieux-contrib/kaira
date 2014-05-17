@@ -19,7 +19,7 @@ TraceLog::TraceLog(int process_id, int thread_id, size_t size)
 
 	if (process_id == 0) {
 		FILE *f = fopen("trace.kth", "w");
-		if (f == NULL) {
+		if (f == nullptr) {
 			perror("trace.kth");
 			exit(-1);
 		}
@@ -31,11 +31,11 @@ TraceLog::TraceLog(int process_id, int thread_id, size_t size)
 	filename << "trace-" << process_id << "-" << thread_id << ".ktt";
 
 	file = fopen(filename.str().c_str(), "w");
-	if (file == NULL) {
+	if (file == nullptr) {
 		perror("TraceLog::TraceLog");
 		exit(-1);
 	}
-	setbuf(file, NULL); // Unbuffered file
+	setbuf(file, nullptr); // Unbuffered file
 
 	write_key_value("KairaThreadTrace", "1");
 	char hostname[1024];

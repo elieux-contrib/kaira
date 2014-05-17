@@ -50,12 +50,12 @@ def write_vars_struct(builder, tr):
 
 def write_tokens_copying(builder, tr):
     def copy_if(token, type, remove):
-        builder.if_begin("t.{0} != NULL", token)
+        builder.if_begin("t.{0} != nullptr", token)
         if remove:
             builder.line("delete {0};", token)
         builder.line("{0} = new ca::Token<{1} >(t.{0}->value);", token, type)
         builder.write_else()
-        builder.line("{0} = NULL;", token)
+        builder.line("{0} = nullptr;", token)
         builder.block_end()
 
     def copy_tokens(remove=False):
@@ -88,12 +88,12 @@ def write_tokens_descructor(builder, tr):
     builder.write_method_start("~Tokens_{0.id}()".format(tr))
     if tr.collective and tr.root:
         inscription = tr.get_collective_inscription()
-        builder.if_begin("token_collective != NULL")
+        builder.if_begin("token_collective != nullptr")
         builder.line("delete token_collective;")
         builder.block_end()
 
     for inscription in tr.get_token_inscriptions_in():
-        builder.if_begin("token_{0} != NULL", inscription.uid)
+        builder.if_begin("token_{0} != nullptr", inscription.uid)
         builder.line("delete token_{0};", inscription.uid)
         builder.block_end()
 
@@ -472,7 +472,7 @@ def write_fire_body(builder,
     for inscription in tr.get_token_inscriptions_in():
         if simulation:
             if inscription.uid in tr.reuse_tokens.values():
-                builder.line("$tokens->token_{0.uid} = NULL;", inscription)
+                builder.line("$tokens->token_{0.uid} = nullptr;", inscription)
         else:
             if inscription.uid not in tr.reuse_tokens.values():
                 builder.line("delete $token_{0.uid};", inscription)
@@ -564,9 +564,9 @@ def write_fire_phase1(builder, tr):
     w.line("return $tokens;")
     # --- End of prepare --- #
 
-    write_enable_pattern_match(builder, tr, w, "return NULL;")
+    write_enable_pattern_match(builder, tr, w, "return nullptr;")
 
-    builder.line("return NULL;")
+    builder.line("return nullptr;")
     builder.block_end()
 
 def write_unpack_binding(builder, tr, binding):
@@ -609,9 +609,9 @@ def write_fire_phase2(builder, tr):
                     remove_tokens=False,
                     packed_tokens_from_place=False,
                     simulation=True)
-    
+
     if tr.collective:
-        builder.line("$tokens->token_collective = NULL;")
+        builder.line("$tokens->token_collective = nullptr;")
     builder.line("delete $binding;")
     builder.block_end()
 
@@ -631,7 +631,7 @@ def write_pack_binding(builder, tr):
         builder.line("ca::pack(packer, tokens->blocked);");
         if tr.root:
             builder.line("ca::pack(packer, tokens->root);");
-            builder.line("ca::pack(packer, tokens->token_collective != NULL);");
+            builder.line("ca::pack(packer, tokens->token_collective != nullptr);");
             builder.if_begin("tokens->token_collective")
             builder.line("ca::pack(packer, tokens->token_collective->value);");
             builder.block_end()
@@ -704,14 +704,14 @@ def write_enable_pattern_match(builder, tr, fire_code, fail_command):
             while prev and inscription.has_same_pick_rule(prev[-1]):
                 prev.pop()
             builder.line("$token_{0.uid} = {1};", inscription, builder.expand(start_from))
-            builder.if_begin("$token_{0.uid} == NULL", inscription)
+            builder.if_begin("$token_{0.uid} == nullptr", inscription)
             builder.line(fail_command)
             builder.block_end()
         else:
             start_from = "$n->place_{0.id}.begin()".format(inscription.edge.place)
             builder.line("$token_{0.uid} = {1};", inscription, builder.expand(start_from))
             if inscription.is_conditioned():
-                 builder.line("if ($token_{0.uid} == NULL) {1}", inscription, fail_command)
+                 builder.line("if ($token_{0.uid} == nullptr) {1}", inscription, fail_command)
 
         filter_expr = inscription.config.get("filter")
         from_expr = inscription.config.get("from")
@@ -747,7 +747,7 @@ def write_enable_pattern_match(builder, tr, fire_code, fail_command):
             builder.line("$token_{0.uid} = $n->place_{0.edge.place.id}.next($token_{0.uid});",
                          inscription)
 
-            builder.if_begin("$token_{0.uid} == NULL", inscription)
+            builder.if_begin("$token_{0.uid} == nullptr", inscription)
             builder.line(fail_command)
             builder.block_end()
             builder.block_end()
@@ -809,7 +809,7 @@ def write_trace_token_list(builder, place, token_list, remove=False, begin=None)
         begin = "{0}.begin()".format(token_list)
 
     builder.line("for (ca::Token<{1.type} > *token={2};"
-                 "token != NULL;"
+                 "token != nullptr;"
                  "token = {0}.next(token))",
                  token_list, place, begin)
     builder.block_begin()

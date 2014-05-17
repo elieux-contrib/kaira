@@ -12,7 +12,7 @@ namespace ca {
 
 namespace casr {
 
-State *state = NULL;
+State *state = nullptr;
 
 void main(RunConfiguration &run_configuration)
 {
@@ -30,7 +30,7 @@ void main(RunConfiguration &run_configuration)
 	state->run();
 	std::cerr << "Kaira: Time = " << state->get_global_time() / 1e6 << "ms\n";
 	delete state;
-	state = NULL;
+	state = nullptr;
 }
 
 }

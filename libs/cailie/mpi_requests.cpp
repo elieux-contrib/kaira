@@ -45,10 +45,10 @@ MPI_Request * MpiRequests::new_request(char *data)
 		// FIXME: Alloc test
 	}
 
-	if(data == NULL) {
+	if(data == nullptr) {
 		if(requests_count == 0) {
 			fprintf(stderr, "Internal error: MpiRequests::new_request: "
-								"data == NULL and requests_count == 0\n");
+								"data == nullptr and requests_count == 0\n");
 			exit(-1);
 		}
 		requests_data[requests_count] = requests_data[requests_count-1];

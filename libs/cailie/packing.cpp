@@ -37,7 +37,7 @@ void ca::Packer::free()
 void ca::Packer::write_to_file(const char *filename)
 {
 	FILE *f = fopen(filename, "w");
-	if (f == NULL) {
+	if (f == nullptr) {
 		perror("ca::Packer::write_to_file");
 		exit(-1);
 	}

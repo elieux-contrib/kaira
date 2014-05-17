@@ -13,8 +13,8 @@ class Process;
 
 class Listener {
 	public:
-		Listener() : process_count(0), processes(NULL), listen_socket(0),
-			thread(0), start_barrier(NULL), state(NULL){}
+		Listener() : process_count(0), processes(nullptr), listen_socket(0),
+			thread(0), start_barrier(nullptr), state(nullptr){}
 		~Listener() {
 			cleanup_state();
 		}

@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "nullptr.h"
+
 namespace ca {
 
 class Packer;
@@ -49,7 +51,7 @@ template<typename T> void unpack(Unpacker &unpacker, T &value) {
 class Unpacker {
 
 	public:
-		Unpacker(): buffer_pos(NULL), buffer(NULL) {}
+		Unpacker(): buffer_pos(nullptr), buffer(nullptr) {}
 
 		Unpacker(void *mem) {
 			buffer_pos = static_cast<char*>(mem);

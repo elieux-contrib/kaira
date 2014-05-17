@@ -85,7 +85,7 @@ class TransitionDef {
 
 class Transition {
 	public:
-		Transition() : active(false), def(NULL) {}
+		Transition() : active(false), def(nullptr) {}
 
 		void set_def(TransitionDef *def) {
 				this->def = def;
