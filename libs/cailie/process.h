@@ -66,7 +66,7 @@ class Process {
 			return thread;
 		}
 
-		void send(int target, Net * net, int edge_id, int tokens_count,
+		void send_unicast(int target, Net * net, int edge_id, int tokens_count,
 			const Packer &packer, Thread *thread);
 		void send_multicast(const std::vector<int> &targets, Net *net, int edge_id,
 			int tokens_count, const Packer &packer, Thread *thread);

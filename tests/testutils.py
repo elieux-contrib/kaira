@@ -35,7 +35,8 @@ class RunProgram:
         return output
 
     def run(self, expected_output = None):
-        pr = subprocess.Popen([self.filename] + self.parameters, stdout=subprocess.PIPE,
+        command = [ "python", self.filename ] if self.filename.endswith('.py') else [ self.filename ]
+        pr = subprocess.Popen(command + self.parameters, stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, cwd = self.cwd, env = self.env)
         return self.result(pr, expected_output)
 
@@ -104,7 +105,7 @@ class Project:
             return os.path.join(self.get_directory(), "main")
 
     def clean(self):
-        RunProgram("/bin/sh",
+        RunProgram("sh",
                    [os.path.join(TEST_PROJECTS, "fullclean.sh")],
                    cwd=self.get_directory()).run()
 

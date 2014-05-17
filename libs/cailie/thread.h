@@ -20,7 +20,7 @@ class ThreadBase {
 		virtual int get_process_count() const = 0;
 		virtual int get_process_id() const = 0;
 
-		virtual void send(int target, NetBase *net, int edge_id,
+		virtual void send_unicast(int target, NetBase *net, int edge_id,
 						int tokens_count, const Packer &packer) = 0;
 		virtual void send_multicast(const std::vector<int> &targets, NetBase *net,
 			int edge_id, int tokens_count, const Packer &packer) = 0;
@@ -46,7 +46,7 @@ class ThreadBase {
 		/* For simulated run */
 
 		/* Methods for simulated run where packet with fake size can be sent */
-		virtual void send(int target, NetBase *net, int edge_id,
+		virtual void send_unicast(int target, NetBase *net, int edge_id,
 						int tokens_count, const Packer &packer, size_t fake_size) {}
 		virtual void send_multicast(const std::vector<int> &targets, NetBase *net,
 			int edge_id, int tokens_count, const Packer &packer, size_t fake_size) {};
@@ -87,9 +87,9 @@ class Thread : public ThreadBase {
 		}
 		#endif
 
-		void send(int target, NetBase *net, int edge_id, int tokens_count, const Packer &packer) {
+		void send_unicast(int target, NetBase *net, int edge_id, int tokens_count, const Packer &packer) {
 			// Thread can be run only over standard nets so we can safely cast
-			process->send(target, static_cast<Net*>(net),
+			process->send_unicast(target, static_cast<Net*>(net),
 					edge_id, tokens_count, packer, this);
 		}
 		void send_multicast(const std::vector<int> &targets, NetBase *net,

@@ -290,7 +290,7 @@ def write_send_token(builder,
                 write_add(inscription.expr)
     else: # Remote send
         if inscription.is_unicast():
-            sendtype = ""
+            sendtype = "_unicast"
             builder.if_begin(builder.expand("{0} == $thread->get_process_id()",
                                             inscription.target))
             if inscription.is_bulk():

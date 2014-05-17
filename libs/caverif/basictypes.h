@@ -48,7 +48,7 @@ namespace cass {
 				return 1;
 			}
 			void quit_all() { return; }
-			void send(int target, ca::NetBase* net, int edge_id, int token_count, const ca::Packer &packer) { return; }
+			void send_unicast(int target, ca::NetBase* net, int edge_id, int token_count, const ca::Packer &packer) { return; }
 			void send_multicast(const std::vector<int> &targets, ca::NetBase *net,
 					int edge_id, int tokens_count, const ca::Packer &packer) { return; }
 		protected:
